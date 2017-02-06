@@ -5,8 +5,20 @@ import './css/side-menu.css';
 class App extends Component {
   constructor() {
       super();
-      this.state = {lista : [{nome:"Eduardo Pedroso", email: "drdpedroso@gmail.com", senha: "1234"}]};
+      this.state = {lista : []};
   }  
+
+  componentWillMount(){
+    fetch(`http://cdc-react.herokuapp.com/api/autores`)  
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        this.setState({lista : result});
+      })
+      .catch(err => {
+      console.error('Failed retrieving information', err);
+    });
+  }
 
   render() {
     return (
