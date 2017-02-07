@@ -8,7 +8,7 @@ class App extends Component {
       this.state = {lista : []};
   }  
 
-  componentWillMount(){
+  componentDidMount(){
     fetch(`http://cdc-react.herokuapp.com/api/autores`)  
       .then(response => response.json())
       .then(result => {
@@ -75,7 +75,7 @@ class App extends Component {
                     {
                         this.state.lista.map((autor) => {
                             return(
-                                <tr>
+                                <tr key={autor.id}>
                                     <td>{autor.nome}</td>
                                     <td>{autor.email}</td>
                                 </tr>
