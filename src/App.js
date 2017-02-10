@@ -31,6 +31,7 @@ class App extends Component {
       })  
       .then(response => response.json())
       .then(result => {
+        this.setState({lista : result});
       })
       .catch(err => {
         console.error('Failed retrieving information', err);
