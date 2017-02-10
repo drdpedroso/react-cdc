@@ -20,6 +20,28 @@ class App extends Component {
     });
   }
 
+  enviaForm(event){
+    event.preventDefault();
+
+    fetch(`http://cdc-react.herokuapp.com/api/autores`, {  
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+
+        body: JSON.stringify({nome:'', email:'', senha: ''})
+      })  
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        // this.setState({lista : result});
+      })
+      .catch(err => {
+        console.error('Failed retrieving information', err);
+      });
+
+  }
+
   render() {
     return (
 <div id="layout">
@@ -44,7 +66,7 @@ class App extends Component {
             </div>
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
-                <form className="pure-form pure-form-aligned">
+                <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="post">
                   <div className="pure-control-group">
                     <label htmlFor="nome">Nome</label> 
                     <input id="nome" type="text" name="nome" value=""  />                  
