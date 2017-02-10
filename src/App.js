@@ -12,7 +12,6 @@ class App extends Component {
     fetch(`http://cdc-react.herokuapp.com/api/autores`)  
       .then(response => response.json())
       .then(result => {
-        console.log(result);
         this.setState({lista : result});
       })
       .catch(err => {
@@ -32,7 +31,6 @@ class App extends Component {
       })  
       .then(response => response.json())
       .then(result => {
-        console.log(result);
       })
       .catch(err => {
         console.error('Failed retrieving information', err);
