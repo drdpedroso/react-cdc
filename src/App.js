@@ -5,7 +5,7 @@ import './css/side-menu.css';
 class App extends Component {
   constructor() {
       super();
-      this.state = {lista : []};
+      this.state = {lista : [], nome:'', email:'', senha: ''};
   }  
 
   componentDidMount(){
@@ -28,18 +28,28 @@ class App extends Component {
         headers: new Headers({
           'Content-Type': 'application/json'
         }),
-
-        body: JSON.stringify({nome:'', email:'', senha: ''})
+        body: JSON.stringify({nome:this.state.nome, email:this.state.email, senha: this.state.senha})
       })  
       .then(response => response.json())
       .then(result => {
         console.log(result);
-        // this.setState({lista : result});
       })
       .catch(err => {
         console.error('Failed retrieving information', err);
       });
 
+  }
+
+  setNome(event){
+    this.setState({nome:event.target.value});
+  }
+
+  setEmail(event){
+    this.setState({email:event.target.value});
+  }
+
+  setSenha(event){
+    this.setState({senha:event.target.value});
   }
 
   render() {
@@ -66,18 +76,18 @@ class App extends Component {
             </div>
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
-                <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="post">
+                <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm.bind(this)} method="post">
                   <div className="pure-control-group">
                     <label htmlFor="nome">Nome</label> 
-                    <input id="nome" type="text" name="nome" value=""  />                  
+                    <input id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome.bind(this)} />                  
                   </div>
                   <div className="pure-control-group">
                     <label htmlFor="email">Email</label> 
-                    <input id="email" type="email" name="email" value=""  />                  
+                    <input id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail.bind(this)}  />                  
                   </div>
                   <div className="pure-control-group">
                     <label htmlFor="senha">Senha</label> 
-                    <input id="senha" type="password" name="senha"  />                                      
+                    <input id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha.bind(this)}  />                                      
                   </div>
                   <div className="pure-control-group">                                  
                     <label></label> 
