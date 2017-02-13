@@ -3,12 +3,13 @@ import './css/pure-min.css';
 import './css/side-menu.css';
 import SubmitCustomizado from './componentes/SubmitCustomizado';
 import InputCustomizado from './componentes/InputCostumizado';
+import { FormularioAutor, TabelaAutores} from './componentes/Autor';
 
 class App extends Component {
   constructor() {
-      super();
-      this.state = {lista : [], nome:'', email:'', senha: ''};
-  }  
+    super();
+    this.state = {lista : []};
+  }
 
   componentDidMount(){
     fetch(`http://cdc-react.herokuapp.com/api/autores`)  
@@ -19,38 +20,6 @@ class App extends Component {
       .catch(err => {
       console.error('Failed retrieving information', err);
     });
-  }
-
-  enviaForm(event){
-    event.preventDefault();
-
-    fetch(`http://cdc-react.herokuapp.com/api/autores`, {  
-        method: 'POST',
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        }),
-        body: JSON.stringify({nome:this.state.nome, email:this.state.email, senha: this.state.senha})
-      })  
-      .then(response => response.json())
-      .then(result => {
-        this.setState({lista : result});
-      })
-      .catch(err => {
-        console.error('Failed retrieving information', err);
-      });
-
-  }
-
-  setNome(event){
-    this.setState({nome:event.target.value});
-  }
-
-  setEmail(event){
-    this.setState({email:event.target.value});
-  }
-
-  setSenha(event){
-    this.setState({senha:event.target.value});
   }
 
   render() {
@@ -77,36 +46,11 @@ class App extends Component {
             </div>
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
-                <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm.bind(this)} method="post">
-                 
-                  <InputCustomizado id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome} label="Nome"/>                                              
-                  <InputCustomizado id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail} label="Email"/>                                              
-                  <InputCustomizado id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha} label="Senha"/>
-
-                  <SubmitCustomizado text="Gravar"/>
-                </form>             
+                <FormularioAutor />
+                   
               </div>  
               <div>            
-                <table className="pure-table">
-                  <thead>
-                    <tr>
-                      <th>Nome</th>
-                      <th>email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                        this.state.lista.map((autor) => {
-                            return(
-                                <tr key={autor.id}>
-                                    <td>{autor.nome}</td>
-                                    <td>{autor.email}</td>
-                                </tr>
-                            );
-                        })
-                    }
-                  </tbody>
-                </table> 
+                <TabelaAutores />
               </div>             
             </div>
           </div>            
