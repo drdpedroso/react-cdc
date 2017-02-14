@@ -3,7 +3,7 @@ import './css/pure-min.css';
 import './css/side-menu.css';
 import SubmitCustomizado from './componentes/SubmitCustomizado';
 import InputCustomizado from './componentes/InputCostumizado';
-import { FormularioAutor, TabelaAutores} from './componentes/Autor';
+import AutorBox from './componentes/Autor';
 
 class App extends Component {
   constructor() {
@@ -46,11 +46,8 @@ class App extends Component {
             </div>
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
-                <FormularioAutor />
-                   
-              </div>  
-              <div>            
-                <TabelaAutores />
+                <AutorBox />
+
               </div>             
             </div>
           </div>            

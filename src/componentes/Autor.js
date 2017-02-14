@@ -1,23 +1,8 @@
 import React,{ Component } from 'react';
 import InputCustomizado from './InputCostumizado';
 
-export class TabelaAutores extends Component{
-  constructor() {
-    super();
-    this.state = {lista : []};
-  }
-
-  componentDidMount(){  
-    fetch(`http://cdc-react.herokuapp.com/api/autores`)  
-      .then(response => response.json())
-      .then(result => {
-        this.setState({lista : result});
-      })
-      .catch(err => {
-      console.error('Failed retrieving information', err);
-    });
-  }
-
+class TabelaAutores extends Component{
+  
     render() {
         return(
                 <div>            
@@ -30,7 +15,7 @@ export class TabelaAutores extends Component{
                         </thead>
                         <tbody>
                           {
-                            this.state.lista.map(function(autor){
+                            this.props.lista.map(function(autor){
                               return (
                                 <tr key={autor.id}>
                                   <td>{autor.nome}</td>
@@ -46,7 +31,7 @@ export class TabelaAutores extends Component{
     }
 }
 
-export class FormularioAutor extends Component{
+class FormularioAutor extends Component{
     
 
   constructor() {
@@ -82,7 +67,8 @@ export class FormularioAutor extends Component{
       })  
       .then(response => response.json())
       .then(result => {
-        this.setState({lista : result});
+        this.props.callbackAtualizaListagem(result);
+        // this.setState({lista : result});
       })
       .catch(err => {
         console.error('Failed retrieving information', err);
@@ -105,4 +91,39 @@ export class FormularioAutor extends Component{
           </div>
       );
   }
+}
+
+export default class AutorBox extends Component {
+
+
+  constructor() {
+    super();
+    this.state = {lista : []};
+    this.atualizaListagem = this.atualizaListagem.bind(this);
+  }
+  atualizaListagem(novaLista){
+    this.setState({lista: novaLista})
+  }
+
+
+  componentDidMount(){  
+    fetch(`http://cdc-react.herokuapp.com/api/autores`)  
+      .then(response => response.json())
+      .then(result => {
+        this.setState({lista : result});
+      })
+      .catch(err => {
+      console.error('Failed retrieving information', err);
+    });
+  }
+
+  render(){
+    return(
+        <div>
+            <FormularioAutor callbackAtualizaListagem={this.atualizaListagem} />     
+            <TabelaAutores lista={this.state.lista} />
+        </div>
+    );
+  }
+
 }
