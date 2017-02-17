@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
 import InputCustomizado from './InputCostumizado';
+import PubSub from 'pubsub-js';
 
 class TabelaAutores extends Component{
   
