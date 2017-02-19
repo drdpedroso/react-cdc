@@ -4,6 +4,7 @@ import './css/side-menu.css';
 import SubmitCustomizado from './componentes/SubmitCustomizado';
 import InputCustomizado from './componentes/InputCostumizado';
 import AutorBox from './componentes/Autor';
+import PubSub from 'pubsub-js';
 
 class App extends Component {
   constructor() {
@@ -19,6 +20,11 @@ class App extends Component {
       })
       .catch(err => {
       console.error('Failed retrieving information', err);
+    });
+
+    PubSub.subscribe('atualiza-lista-autores', (topico, data) => {
+      console.log(data);
+      this.setState({lista : data})
     });
   }
 
@@ -47,7 +53,6 @@ class App extends Component {
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
                 <AutorBox />
-
               </div>             
             </div>
           </div>            

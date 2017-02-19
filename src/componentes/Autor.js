@@ -68,8 +68,8 @@ class FormularioAutor extends Component{
       })  
       .then(response => response.json())
       .then(result => {
-        this.props.callbackAtualizaListagem(result);
-        // this.setState({lista : result});
+        //Avisa pra galera que tem novo autor cadastrado
+        PubSub.publish('atualiza-lista-autores',result);
       })
       .catch(err => {
         console.error('Failed retrieving information', err);
@@ -121,7 +121,7 @@ export default class AutorBox extends Component {
   render(){
     return(
         <div>
-            <FormularioAutor callbackAtualizaListagem={this.atualizaListagem} />     
+            <FormularioAutor/>     
             <TabelaAutores lista={this.state.lista} />
         </div>
     );
